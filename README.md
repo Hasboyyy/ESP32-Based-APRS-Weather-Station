@@ -1,1 +1,2 @@
 # ESP32-Based-APRS-Weather-Station
+This project is an implementations of APRS-IS (Automatic Package Reporting System-Internet Service) and MQTT Protocol with ESP32 Board. The purpose of this project is to send measured weather parameters through those protocols using some sensors. Temperature and relative humidity were measured with DHT11 sensor, air pressure with BMP280 sensor and solar irradiance with BH1750 sensor. The system also added with RTC DS1302 modul for NTP time backup.
