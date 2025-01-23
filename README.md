@@ -14,9 +14,11 @@ Here are the components list i used for this kit :
 - some jumper wires.
 
 Here is the schematic i made with EasyEDA, 
-![My Image](hardware/Schematic_ESPAPRS_2025-01-23.png)
+![My Image](Hardware/Schematic.png)
 
 I used ESP32 with 32pins on it, the board mounted to the universal pcb first, followed by all the components on each side. For the lux meter BH1750 sensor, i mounted it on the top op board position, the BHP and DHT sensor on the same side, and the lcd on the other side. The usb port position of the main board also placed down.
+
+![My Image](Hardware/Components.jpg)![My Image](Hardware/BH1750.jpg)![My Image](Hardware/DHT and BMP.jpg)
 
 used in total 3 address of I2C communication for this system, 
 
