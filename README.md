@@ -18,7 +18,7 @@ Here is the schematic i made with EasyEDA,
 
 I used ESP32 with 32pins on it, the board mounted to the universal pcb first, followed by all the components on each side. For the lux meter BH1750 sensor, i mounted it on the top op board position, the BHP and DHT sensor on the same side, and the lcd on the other side. The usb port position of the main board also placed down.
 
-![My Image](Hardware/Components.jpg)![My Image](Hardware/BH1750.jpg)![My Image](Hardware/DHT and BMP.jpg)
+![My Image](Hardware/Components.jpg)![My Image](Hardware/BH1750.jpg)![My Image](Hardware/DHTBMP.jpg)
 
-used in total 3 address of I2C communication for this system, 
-
+The BMP, BH1750, and LCD using I2C communication pin with different address, BMP actually has two communication methods, but i use the I2C addres due to ease building (this sensor using 0x76 I2C addres for communication addrress), LCD using 0x27 address, then the addres pin on BH1750 i jumped into a GND pin to make 0x23 addres as noted as on the sensor's documentationn. All the VCC components connected to 3.3V pin except the LCD connected to VIN pin. The RTC using Three-Wire communication through pin 5, 4, 2 for the CLK, DATE, and RST.
+# FIRMWARE
