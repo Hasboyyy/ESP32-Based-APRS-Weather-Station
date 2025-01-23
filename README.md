@@ -10,4 +10,6 @@ Here are the components list i used for this kit :
 - BMP280 sensor;
 - BH1750 sensor;
 - Active Buzzer;
-- some wire;
+- some jumper wires.
+
+
