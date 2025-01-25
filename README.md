@@ -1,7 +1,7 @@
 # ESP32-Based-APRS-Weather-Station
 This project implements APRS-IS (Automatic Packet Reporting System-Internet Service) and the MQTT protocol using an ESP32 board. The purpose of this project is to transmit measured weather parameters through these protocols. Before we go to the reporting system, let's talk about the hardware first.
 # HARDWARE
-So, there are at least 4 parameters measured by this system with nodemcu ESP32 dev module as the main board. Those parameters including temperature, humidity, pressure and irradiance. The temperature and relative humidity are measured with a DHT11 sensor, air pressure with a BMP280 sensor (althought this sensor also could do temperature measurement), and solar irradiance with a BH1750 sensor. The system is also equipped with an RTC DS1302 module for NTP time backup and an active buzzer for notifications when the package uploaded. All components then mounted to a 5 x 7 cm holed empty universal pcb, make it small and compact.
+The system measures at least four parameters, using the NodeMCU ESP32 Dev module as the main board. These parameters include temperature, humidity, pressure, and irradiance. The temperature and relative humidity are measured using a DHT11 sensor, air pressure is measured with a BMP280 sensor (although this sensor can also measure temperature), and solar irradiance is measured with a BH1750 sensor. The system is also equipped with an RTC DS1302 module for NTP time backup and an active buzzer for notifications when a package is uploaded. All components are mounted on a 5x7 cm holed universal PCB, making it small and compact.
 
 Here are the components list i used for this kit :
 - NodeMCU ESP32 DEV KIT 32pins;
@@ -18,7 +18,9 @@ Here is the schematic i made with EasyEDA,
 
 I used ESP32 with 32pins on it, the board mounted to the universal pcb first, followed by all the components on each side. For the lux meter BH1750 sensor, i mounted it on the top op board position, the BHP and DHT sensor on the same side, and the lcd on the other side. The usb port position of the main board also placed down.
 
-![My Image](Hardware/Components.jpg)
+<p align="center">
+    <img src="Hardware/Components.jpg" alt="My Image" />
+</p>
 
 The BMP, BH1750, and LCD using I2C communication pins with different addresses, BMP actually has two communication methods, but i use the I2C addres due to ease building (this sensor using 0x76 I2C addres for communication addrress), LCD using 0x27 address, then the addres pin on BH1750 i jumped into a GND pin to make 0x23 addres as noted as on the sensor's documentationn. All the VCC components connected to 3.3V pin except the LCD connected to VIN pin with 5v. The RTC using Three-Wire communication through pin 5, 4, 2 for the CLK, DATE, and RST.
 # FIRMWARE
@@ -53,8 +55,7 @@ WXStations are personal weather stations that collect local meteorological data 
 ![My Image](Firmware/Ver.1.0.0/package_format.jpg)
 
 
-This image shows us how the format of the APRS package is we need to get verified as weather report, firstly of course we need an amateur radio callsign, the "-13" tell that this station is a weather station, then we also need to send our location with that writed in that format. The coordinate or QTH configuration in this device is still using GPS input from the user(in the future maybe i will add a GPS module), then there are some parameters such wind direction, wind speed, temperature in fahrenheit, rain per hour, rain per day, rain per hour, humidity, air pressure, and luminousity in those formats that must be writed on some numerical digit format. I don't measure wind and rain parameters due to limitation of components, but hopefully in future i can send all the weather parameters.
-To meet the standard formats we need, then i did this conversion and formatting with this block of code, using sprintf.
+This image shows the format of the APRS package that we need to verify as a weather report. First, we need an amateur radio callsign, and the “-13” suffix indicates that this station is a weather station. We also need to send the station's location in the correct format. Currently, the device uses GPS input from the user (I may add a GPS module in the future). The report includes parameters such as wind direction, wind speed, temperature (in Fahrenheit), rain per hour, rain per day, humidity, air pressure, and luminosity, all in specific numerical formats. However, I don't measure wind or rain due to component limitations, but I hope to include all weather parameters in the future. To meet the standard formats, I performed the necessary conversions and formatting using the following block of code:
 
 ```cpp
 // formatting parameter for CWOP APRS format
@@ -85,22 +86,22 @@ String message = String(USER) + ">APRS,TCPIP*:=" + String(GPS) +
                    " G: " + String(sensoraprs[3]) + "W/m^2";
 ```
 
-I also add a block of code that to handle the situation when the sensor failed to read their own parameters, and then return the values by default of the APRS format before. I also defined the default value like rain by "r..." and other parameters that i don't measure and still write the code on the message. The message after irradiance is a variable of comment that we can change as we like, i'd like to write the measured values again so i call the sensor values variable that i stored in an array again. 
+I also add a block of code that to handle the situation when the sensor fails to read the parameters, and then return the values by default of the APRS format before. I also defined the default value like rain by "r..." and other parameters that i don't measure and still write the code on the message. The message after irradiance is a variable of comment that we can change as we like, i like to write the measured values again so i called the sensor values variable that i stored in an array again. 
 
-To do the APRS uploader i use a library called [APRS-IS Lib](https://github.com/lora-aprs/APRS-IS-Lib) by Peter Buchegger. I also we need to register our callsign first to get a pass code for the APRS-IS network through [this page](https://aprs.do3sww.de/). Once the message is uploaded i add a notification through the lcd screen and a buzzer. To get know if our message received by the server i also add a block of code that can receive the mesage from the server so we can confirm if our message get received and verified by them.
+To do the APRS uploader i use a library called [APRS-IS Lib](https://github.com/lora-aprs/APRS-IS-Lib) by Peter Buchegger. I also we need to register our callsign first to get a pass code for the APRS-IS network through [this page](https://aprs.do3sww.de/). Once the message is uploaded i added a notification through the lcd screen and a buzzer. To get know if our message received by the server i also added a block of code that can receive the mesage from the server so we can confirm if our message get received and verified by them.
 
 # MQTT
-Although all of the data stored in the database, as an owner i also want to store my own data in my own database. That's why i also send the data by MQTT protocols. I do this with a libray called [PubSubclient](https://pubsubclient.knolleary.net/) by Nick O'Leary, though i still use the free broker to upload the data. The algorithm was same, first i collect the data, formatted and stored the data on a variables, then send it to a broker server with a topic. For notification i also add a notification when the data was sended.
+Although all of the data stored in the database, as an owner i also want to store my own data in my own database. That's why i also send the data by MQTT protocols. I do this with a libray called [PubSubclient](https://pubsubclient.knolleary.net/) by Nick O'Leary,  though I still use a free broker to upload the data. The algorithm is the same: first, I collect and format the data, store it in variables, and then send it to the broker server with a unique topic. For notifications, I also added a notification when the data is sent.
 ```cpp
 snprintf(payloadsensor, sizeof(payloadsensor),
          "[%lu, \"%s\", \"%s\", %.2f, %.2f, %.2f, %.2f]",
          epochTime, formattedTime, GPS, sensormqtt[4], sensormqtt[1], sensormqtt[2], sensormqtt[3]);
 ```
-I send a total 7 variable in one payload of message, time in epoch, time in formatted time, my position, temperature, humidity, pressure, and irradiance in a unique topic. Before i start the system, i made an Ubuntu EC2 instance in AWS, so i can run the Node-RED platform via public ip with port of 1880 to parsing and sending the payload to mySQL database, using this flows. 
+I send a total of seven variables in one message payload: time (in epoch format), formatted time, position, temperature, humidity, pressure, and irradiance, all in a unique topic. Before starting the system, I created an Ubuntu EC2 instance in AWS to run the Node-RED platform via public IP (port 1880) to parse and send the payload to a MySQL database, using the following flows.
 
 ![My Image](Firmware/Ver.1.0.0/flows.png)
 
-SENSORREAD node is used to subscribe the MQTT topic from the broker, so i can receive the package from my device, then the json node is used to convert the payload to the JavaScript Object, in the function i write a block of code that send all the parameters to mySQL database,
+The SENSORREAD node is used to subscribe to the MQTT topic from the broker to receive the package from the device. The JSON node is used to convert the payload into a JavaScript object format. After that, the MySQL node is used to insert the data into a table. The table is created using the following query:
 ```
 var time = msg.payload[0];
 var loc = "'" + msg.payload[2] + "'";
@@ -114,7 +115,7 @@ return msg;
 ```
 before that i ofcourse started the mySQL service on my Ubuntu EC2, made a database and a table contains columns that i want to fill such as time, location, and the sensor values. After that i add a mySQL node to the flows, fill the Host with the Public ip of my instance, and the port with mySQL port 3306. Last but not least i add a debug node to know if the payload was store in the database or not.
 
-Once the payload was sended and stored to the database, then i made a grafana cloud to visualize the data through a page that can viewed by others. First i connect the data source to my mySQL database, then i made a dashboard contains some graphics that visualized all of my data i have. I also add a header to give an information about my station.
+Once the payload was sended and stored to the database, then i made a grafana cloud to visualize the data through a page that can viewed by others. First i connected the data source to my mySQL database, then i made a dashboard contains some graphics that visualized all of my data i have. I also added a header to give an information about my station.
 
 ![My Image](Firmware/Ver.1.0.0/grafana.png)
 
