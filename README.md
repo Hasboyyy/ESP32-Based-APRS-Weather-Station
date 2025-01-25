@@ -43,7 +43,7 @@ sensoraprs[4] = dht.readTemperature();
 </div>
 
 
-Here is how i measured the the weather parameters. BMP280 read the pressure on Pascal (Pa) unit, but i want to get the pressure in mbar unit so we need to devided it with 100 to get pressure in milibar, also with the irradiance with BH1750, the sensor read the light in lux unit, but we need to convert it tp W/m^2 unit. We did this conversion because the APRS package need those units to confirm our report.
+Here is how i measured the the weather parameters and some conversion to get sensor values in a specific unit, BMP280 read the sir pressure on Pascal (Pa) unit, but i want to get the pressure in mbar unit in 5 digit so we need to devided it with 10 to get pressure in 5 digit milibar, also with the irradiance with BH1750, the sensor read the light in lux unit, but we need to convert it to W/m^2 unit, based I found this [helpful resource]([https://example.com](https://ambientweather.com/support/question/view/id/1452/)) that might help.. We did this conversion because the APRS package need those units to confirm our report.
 
 
 
