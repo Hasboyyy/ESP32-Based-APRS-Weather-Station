@@ -98,6 +98,8 @@ snprintf(payloadsensor, sizeof(payloadsensor),
 ```
 I send a total 7 variable in one payload of message, time in epoch, time in formatted time, my position, temperature, humidity, pressure, and irradiance in a unique topic. Before i start the system, i made an Ubuntu EC2 instance in AWS, so i can run the Node-RED platform via public ip with port of 1880 to parsing and sending the payload to mySQL database, using this flows. 
 
+![My Image](Firmware/flows.png)
+
 SENSORREAD node is used to subscribe the MQTT topic from the broker, so i can receive the package from my device, then the json node is used to convert the payload to the JavaScript Object, in the function i write a block of code that send all the parameters to mySQL database,
 ```
 var time = msg.payload[0];
@@ -113,3 +115,5 @@ return msg;
 before that i ofcourse started the mySQL service on my Ubuntu EC2, made a database and a table contains columns that i want to fill such as time, location, and the sensor values. After that i add a mySQL node to the flows, fill the Host with the Public ip of my instance, and the port with mySQL port 3306. Last but not least i add a debug node to know if the payload was store in the database or not.
 
 Once the payload was sended and stored to the database, then i made a grafana cloud to visualize the data through a page that can viewed by others. First i connect the data source to my mySQL database, then i made a dashboard contains some graphics that visualized all of my data i have. I also add a header to give an information about my station.
+
+![My Image](Firmware/grafana.png)
