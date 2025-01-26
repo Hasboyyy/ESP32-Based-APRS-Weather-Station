@@ -120,4 +120,4 @@ Once the payload was sended and stored to the database, then i made a grafana cl
 
 ![My Image](Firmware/Ver.1.0.0/grafana.png)
 
-My public dashboard until this documentation writed, accesscible via [this page](https://hasboy.grafana.net/public-dashboards/6d22b4d4ccd94612b9d01ee24185d1a6?orgId=1). Don't mind the irradiance value, i still placed this device in an indoor room, stil searching a box that fit-well this tiny components, or maybe  will desain the 3D model for the box next.
+My public dashboard until this documentation writed, accesscible via [this page](https://hasboy.grafana.net/public-dashboards/6d22b4d4ccd94612b9d01ee24185d1a6?orgId=1). Don't mind the irradiance value, i still placed this device in an indoor room, still searching a box that fit-well this tiny components, or maybe  will desain the 3D model for the box next.
