@@ -16,7 +16,7 @@ Here are the components list i used for this kit :
 Here is the schematic i made with EasyEDA, 
 ![My Image](Hardware/Schematic.png)
 
-I used ESP32 with 32pins on it, the board mounted to the universal pcb first, followed by all the components on each side. For the lux meter BH1750 sensor, i mounted it on the top op board position, the BHP and DHT sensor on the same side, and the lcd on the other side. The usb port position of the main board also placed down.
+I used the ESP32 with 32 pins on it, mounted the board to the universal PCB first, followed by the components on each side. For the BH1750 sensor, I mounted it on the top of the board. The BMP280 and DHT11 sensors are on the same side, and the LCD is on the other side. The USB port of the main board is also positioned at the bottom.
 
 <p align="center">
     <img src="Hardware/Components.jpg" alt="My Image" />
