@@ -9,6 +9,7 @@ Here are the components list i used for this kit :
 - DHT11 sensor;
 - BMP280 sensor;
 - BH1750 sensor;
+- 1302 RTC module;
 - Active Buzzer;
 - lcd 16x2 I2C;
 - some jumper wires.
