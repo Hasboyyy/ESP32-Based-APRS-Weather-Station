@@ -4,7 +4,7 @@ This project implements APRS-IS (Automatic Packet Reporting System-Internet Serv
 The system measures at least four parameters, using the NodeMCU ESP32 Dev module as the main board. These parameters include temperature, humidity, pressure, and irradiance. The temperature and relative humidity are measured using a DHT11 sensor, air pressure is measured with a BMP280 sensor (although this sensor can also measure temperature), and solar irradiance is measured with a BH1750 sensor. The system is also equipped with an RTC DS1302 module for NTP time backup and an active buzzer for notifications when a package is uploaded. All components are mounted on a 5x7 cm holed universal PCB, making it small and compact.
 
 Here are the components list i used for this kit :
-- NodeMCU ESP32 DEV KIT 32pins;
+- ESP32 DEV KIT 30pins;
 - 5 x 7 cm holed empty universal pcb;
 - DHT11 sensor;
 - BMP280 sensor;
@@ -17,7 +17,7 @@ Here are the components list i used for this kit :
 Here is the schematic i made with EasyEDA, 
 ![My Image](Hardware/Schematic.png)
 
-I used the ESP32 with 32 pins on it, mounted the board to the universal PCB first, followed by the components on each side. For the BH1750 sensor, I mounted it on the top of the board. The BMP280 and DHT11 sensors are on the same side, and the LCD is on the other side. The USB port of the main board is also positioned at the bottom.
+I used the ESP32 with 30 pins on it, mounted the board to the universal PCB first, followed by the components on each side. For the BH1750 sensor, I mounted it on the top of the board. The BMP280 and DHT11 sensors are on the same side, and the LCD is on the other side. The USB port of the main board is also positioned at the bottom.
 
 <p align="center">
     <img src="Hardware/Components.jpg" alt="My Image" />
